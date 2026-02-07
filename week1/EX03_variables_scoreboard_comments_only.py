@@ -1,4 +1,4 @@
-Player="Ashaz"
-Score=10
-print(Player)
-print(Score)
+player="Ashaz"
+score=10
+print("Player: ", player)
+print("Score: ", score)
