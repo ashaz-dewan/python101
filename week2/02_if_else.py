@@ -1,5 +1,5 @@
 # Filename: 02_if_else.py
-# Python101 - Lesson 2: if / else (Two choices)
+# Python101 - Week 2: if / else (Two choices)
 
 print("=== if / else ===")
 
