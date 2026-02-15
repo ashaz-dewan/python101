@@ -1,16 +1,11 @@
-# Filename: EX02_if_else_comments_only.py
-# EX02 - if / else (COMMENTS ONLY)
-#
-# Goal:
-#   Write a program that asks:
-#     "Is it Sunday?" (yes/no)
-#
-# If yes:
-#   print("Math and Coding Day!")
-# Else:
-#   print("Can't wait for Sunday...")
-#
-# Rules:
-#   - Use input() once
-#   - Use .strip().lower()
-#   - Use one if and one else
+print("=== if / else ===")
+
+answer = input("Is it sunday? (yes/no): ").strip().lower()
+
+if answer == "yes":
+    print("It's math and coding day.")
+else:
+    print("I can't wait for sunday.")
+
+print()
+print("Done.")
