@@ -1,210 +1,100 @@
-# Goal:
-#   Build a text-based adventure game that feels like a real game:
-#     - The player explores an island
-#     - Choices affect health + score
-#     - There is randomness (unpredictable events)
-#     - The game uses loops + conditionals + input + int()
-#
-# You MUST use:
-#   - variables
-#   - input()
-#   - int() type conversion at least once
-#   - if / elif / else
-#   - comparison operators (==, >, <, <=, >=)
-#   - boolean logic (and/or) at least once
-#   - a while loop
-#   - break
-#   - continue (at least once)
-#   - random choice (you will import random)
-#
+# EX06 - Mini Project: Mystery Island Escape
+# Logic: Find the hidden exit before your energy (score) runs out!
+
+# import random
+
 # ------------------------------------------------------------
-# GAME STORY
+# 1. SETUP
 # ------------------------------------------------------------
-# You are stranded on a mystery island.
-# You must survive, explore, and collect points.
-# Random events make the island unpredictable.
-#
+# - Ask for the player's name
+# - Set score = 100 (This is your 'Survival Energy')
+# - Pick the escape_dir (north, south, east, or west) randomly ONCE.
+# - Create a boolean variable 'escaped' and set it to False.
+
 # ------------------------------------------------------------
-# SETUP REQUIREMENTS
+# 2. MAIN GAME LOOP
 # ------------------------------------------------------------
+# Use: while True:
 #
-# 1) Import random
-#    - You will use it to pick random events / directions
+#   A) Display Status:
+#      - Print the player's current Energy (score).
 #
-# 2) Ask the player for their name using input()
+#   B) Get Action:
+#      - Ask: "Where to? (jungle / beach / camp / quit): "
+#      - TIP: Use .lower() on the input so "Jungle" and "jungle" both work!
 #
-# 3) Create these variables:
-#       health = 100
-#       score = 0
-#       turns = 0
-#
-# 4) Print a welcome message using the player's name
-#
+#   C) Validate Action:
+#      - If the action isn't one of the 4 options:
+#        print "You wander in circles... try a real location."
+#        continue (This skips the rest of the loop)
+
 # ------------------------------------------------------------
-# MAIN LOOP REQUIREMENTS
+# 3. ACTION: JUNGLE (The Only Way Out)
 # ------------------------------------------------------------
-#
-# Use:
-#   while health > 0:
-#
-# Inside the loop:
-#
-#   A) Increase turns by 1 each loop
-#
-#   B) Print a status line every turn showing:
-#        - turns
-#        - health
-#        - score
-#
-#   C) Ask the player for an action:
-#        "Choose: jungle / beach / camp / quit"
-#
-#   D) If action is not one of those options:
-#        - Print "Invalid choice"
-#        - continue  (DO NOT lose health, DO NOT gain score)
-#
-# ------------------------------------------------------------
-# ACTION 1: JUNGLE (DIRECTION + RANDOM EVENT)
-# ------------------------------------------------------------
-#
 # If action == "jungle":
-#
-#   1) Ask the player to choose a direction:
-#        "Pick a direction: north / south / east / west"
-#
-#   2) If direction is invalid:
-#        - Print "Invalid direction"
-#        - continue
-#
-#   3) Generate a random "safe" direction:
-#        - Example: safe_dir = random.choice(["north","south","east","west"])
-#
-#   4) Compare player direction to safe_dir:
-#
-#      If they match:
-#         - Print something like "You found berries and water!"
-#         - Increase health (example: +10)
-#         - Increase score (example: +15)
-#
-#      Else:
-#         - Print something like "A wild boar chased you!"
-#         - Decrease health (example: -15)
-#
-#   5) Add an extra twist using boolean logic:
-#      Example rule:
-#        - If (health < 40 and direction != safe_dir) then extra damage
-#          (This forces and/or usage)
-#
+#   - Ask for a direction: north, south, east, or west.
+#   - If direction == escape_dir:
+#       - print "You found a hidden boat! You're free!"
+#       - escaped = True
+#       - break
+#   - Else:
+#       - print "The thick vines block your path. You lose 25 energy."
+#       - score -= 25
+
 # ------------------------------------------------------------
-# ACTION 2: BEACH (TREASURE CHEST WITH CODE LOCK)
+# 4. ACTION: BEACH (The Number Lock Chest)
 # ------------------------------------------------------------
+# If action == "beach":
+#   - "You find a locked supply crate! It needs a code (1-5)."
+#   - code = random.randint(1, 5)
+#   - guess_str = input("Enter the 1-digit code: ")
 #
-# elif action == "beach":
+#   - Check if guess_str.isdigit():
+#       - guess = int(guess_str)
+#   - Else:
+#       - print "That's not even a number!"
+#       - continue
 #
-#   Beach has a treasure chest with a code lock.
-#
-#   1) Randomly generate a secret code number between 1 and 5
-#      (example: code = random.randint(1, 5))
-#
-#   2) Tell the player:
-#        "A chest appears! Guess the code (1 to 5). You get 2 tries."
-#
-#   3) Use a small while loop inside this section:
-#        tries = 2
-#        while tries > 0:
-#            - Ask for guess
-#            - Convert to int using int()
-#            - Validate: if guess < 1 or guess > 5 -> print "Invalid" and continue
-#            - Decrease tries ONLY when valid
-#            - If guess == code:
-#                 - Print "Chest opened!"
-#                 - Increase score a lot (example: +25)
-#                 - break
-#            - Else:
-#                 - Print "Wrong code!"
-#
-#   4) If they fail both tries:
-#        - Print "The chest vanishes!"
-#        - Decrease health slightly (example: -5)
-#
+#   - Logic: 
+#       - If guess == code:
+#           - print "Success! You found protein bars (+25 energy)."
+#           - score += 25
+#       - Else:
+#           - print "The chest hissed! It was a trap! (-10 energy)."
+#           - score -= 10
+
 # ------------------------------------------------------------
-# ACTION 3: CAMP (REST OR RISK)
+# 5. ACTION: CAMP (The Strategy Spot)
 # ------------------------------------------------------------
-#
-# elif action == "camp":
-#
-#   Camping can restore health, but it might attract danger.
-#
-#   1) Ask:
-#        "Do you want to rest or set traps? (rest/traps)"
-#
-#   2) If invalid:
-#        - Print "Invalid choice"
-#        - continue
-#
-#   3) If rest:
-#        - Random chance:
-#            - 50% chance you heal (example +20 health)
-#            - 50% chance you get robbed by monkeys (example -10 score)
-#        - Use random to decide
-#
-#   4) If traps:
-#        - Random chance:
-#            - You catch food (score +10, health +5)
-#            - OR you hurt yourself (health -10)
-#
+# If action == "camp":
+#   - This is where we use Boolean Logic (and/or).
+#   - If score < 50 and random.choice([True, False]):
+#       - print "A local guide finds you and shares a meal! (+50 energy)"
+#       - score += 50
+#   - Elif score >= 50:
+#       - print "The camp is peaceful, but you're wasting time. (-5 energy)"
+#       - score -= 5
+#   - Else:
+#       - print "Monkeys stole your backpack! (-15 energy)"
+#       - score -= 15
+
 # ------------------------------------------------------------
-# QUIT
+# 6. ACTION: QUIT
 # ------------------------------------------------------------
-#
-# elif action == "quit":
-#     - Print goodbye message
-#     - break
-#
+# If action == "quit":
+#   - print "You decide to live on the island forever..."
+#   - break
+
 # ------------------------------------------------------------
-# LOOP SAFETY / ENDING RULES
+# 7. FINAL CHECKS & ENDING
 # ------------------------------------------------------------
+# Inside the loop (at the bottom):
+#   - If score <= 0:
+#       - score = 0
+#       - print "You fainted from exhaustion... Game Over."
+#       - break
 #
-# Safety rules:
-#   - turns MUST increase each loop
-#   - OR health/score MUST change sometimes
-#   - Player MUST always have a way to quit
-#
-# Ending rules:
-#
-# After the loop ends:
-#
-#   If health <= 0:
-#       Print "Game Over"
-#
-#   Always print a final summary:
-#       - Player name
-#       - Turns survived
-#       - Final health
-#       - Final score
-#
-# Bonus ending:
-#   If score >= 60:
-#       Print "You escaped the island as a legend!"
-#   elif score >= 30:
-#       Print "You survived, barely!"
-#   else:
-#       Print "You escaped... but with nothing to brag about."
-#
-# ------------------------------------------------------------
-# OPTIONAL CHALLENGES (Pick 1+)
-# ------------------------------------------------------------
-#
-# 1) Add an inventory system:
-#      inventory = 0
-#      Gain items from events, spend items to heal or boost score
-#
-# 2) Add a boss event after turns >= 8:
-#      Example: force the player into a final jungle direction challenge
-#
-# 3) Add "difficulty":
-#      Ask user for difficulty (1/2/3) using int()
-#      Difficulty changes damage and rewards
-#
-# 4) Add input normalization:
-#      Convert inputs to lowercase to handle "Jungle", "JUNGLE", etc.
+# Outside the loop (The Summary):
+#   - Print a final summary: "Player: [Name] | Final Score: [Score]"
+#   - If escaped == True, print "RESULT: SURVIVED"
+#   - Else, print "RESULT: LOST AT SEA"
