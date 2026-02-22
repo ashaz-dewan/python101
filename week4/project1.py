@@ -8,7 +8,7 @@
 # ------------------------------------------------------------
 # - Ask for the player's name
 # - Set score = 100 (This is your 'Survival Energy')
-# - Pick the escape_dir (north, south, east, or west) randomly ONCE.
+# - Pick the escape_direction (north, south, east, or west) randomly ONCE.
 # - Create a boolean variable 'escaped' and set it to False.
 
 # ------------------------------------------------------------
